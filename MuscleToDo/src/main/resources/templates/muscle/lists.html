@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div>
+			<a th:href="@{/muscle/insert}" class="btn btn-primary">登録</a>
+		</div>
+		<div class="card mt-3">
+			<div class="card-header">
+				検索
+			</div>
+			<div class="card-body">
+				<form th:action="@{/muscle/view}" method="get" th:object="${muscleSearchForm}">
+					<div class="form-group">
+						<div>
+							<label class="form-label">トレーニング部位</label>
+						</div>
+						<div class="btn-group">
+							<div>
+								<input type="checkbox" class="btn-check" id="chest" name="muscleTypeList" value="胸" th:checked="*{isChecked('胸')}">
+								<label class="btn btn-outline-secondary" for="chest">胸</label>
+							</div>
+							<div>
+								<input type="checkbox" class="btn-check" id="back" name="muscleTypeList" value="背中" th:checked="*{isChecked('背中')}">
+								<label class="btn btn-outline-secondary" for="back">背中</label>
+							</div>
+							<div>
+								<input type="checkbox" class="btn-check" id="arm" name="muscleTypeList" value="腕" th:checked="*{isChecked('腕')}">
+								<label class="btn btn-outline-secondary" for="arm">腕</label>
+							</div>
+							<div>
+								<input type="checkbox" class="btn-check" id="shoulder" name="muscleTypeList" value="肩" th:checked="*{isChecked('肩')}">
+								<label class="btn btn-outline-secondary" for="shoulder">肩</label>
+							</div>
+							<div>
+								<input type="checkbox" class="btn-check" id="leg" name="muscleTypeList" value="脚" th:checked="*{isChecked('脚')}">
+								<label class="btn btn-outline-secondary" for="leg">脚</label>
+							</div>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary mt-3">検索</button>
+				</form>
+			</div>
+		</div>
+		<div class="text-center">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>日付</th>
+						<th>トレーニング名</th>
+						<th>重さ</th>
+						<th>セット数</th>
+						<th>回数</th>
+						<th>トレーニングの種類</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list : ${muscleList}" th:object="${list}">
+						<td th:text="${#temporals.format(list.doTime, 'yyyy/MM/dd/HH:mm')}"></td>
+						<td th:text="*{traName}"></td>
+						<td th:text="*{traWei}"></td>
+						<td th:text="*{traSet}"></td>
+						<td th:text="*{traTimes}"></td>
+						<td th:text="*{traType}"></td>
+						<td><a th:href="@{/muscle/{id}/edit(id=${list.id})}" class="btn btn-outline-success">編集</a></td>
+						<td>
+							<form th:action="@{/muscle/view/{id}(id=${list.id})}" th:method="delete"
+								onclick="return confirm('本当に削除しますか？');">
+								<button type="submit" class="btn btn-outline-danger">削除</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</body>
+
+</html>

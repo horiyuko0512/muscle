@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout}"
+>
+<head>
+	<title th:text="${mode == 'CREATE'} ? 'トレメニュー作成' : 'トレメニュー編集'"></title>
+</head>
+<body>
+<section layout:fragment="content">
+	<div>
+		<form th:action="${mode == 'CREATE'} ? @{/muscle/view} : @{/muscle/view/{id}(id=${id})}" 
+			  th:method="${mode == 'CREATE'} ? post : put" 
+			  th:object="${muscleForm}">
+			<div class="form-group">
+				<label for="dT" class="form-label">時刻</label>
+				<input type="datetime-local" id="dT" th:field="*{doTime}" class="form-control" th:errorclass="is-invalid">
+				<span th:errors="*{doTime}" class="invalid-feedback"></span>
+			</div>
+			<div class="form-group mt-3">
+				<label for="tN" class="form-label">トレーニング名</label>
+				<input type="text" id="tN" th:field="*{traName}" class="form-control" th:errorclass="is-invalid">
+				<span th:errors="*{traName}" class="invalid-feedback"></span>
+			</div>
+			<div class="form-group mt-3">
+				<label for="tW" class="form-label">重さ</label>
+				<input type="text" id="tW" th:field="*{traWei}" class="form-control" th:errorclass="is-invalid">
+				<span th:errors="*{traWei}" class="invalid-feedback"></span>
+			</div>
+			<div class="form-group mt-3">
+				<label for="tS" class="form-label">セット数</label>
+				<input type="text" id="tS" th:field="*{traSet}" class="form-control" th:errorclass="is-invalid">
+				<span th:errors="*{traSet}" class="invalid-feedback"></span>
+			</div>
+			<div class="form-group mt-3">
+				<label for="tT" class="form-label">回数</label>
+				<input type="text" id="tT" th:field="*{traTimes}" class="form-control" th:errorclass="is-invalid">
+				<span th:errors="*{traTimes}" class="invalid-feedback"></span>
+			</div>
+			<div class="form-group mt-3">
+				<label for="Try" class="form-label">トレーニング部位:(選択)</label>
+				<select id="tTy" th:field="*{traType}" class="form-control">
+					<option value="胸">胸</option>
+					<option value="背中">背中</option>
+					<option value="腕">腕</option>
+					<option value="肩">肩</option>
+					<option value="脚">脚</option>
+				</select>
+				<span th:errors="*{traType}"></span>
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary mt-3" th:text="${mode == 'CREATE'} ? '登録' : '編集'"></button>
+				<a th:href="@{/muscle/view}" class="btn btn-secondary mt-3">戻る</a>
+			</div>
+		</form>
+	</div>
+</section>
+</body>
+</html>
