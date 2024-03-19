@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.MuscleTodo.service.MuscleEntity;
 import com.example.MuscleTodo.service.MuscleService;
+import com.example.MuscleTodo.service.WeightEntity;
+import com.example.MuscleTodo.service.WeightService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class MuscleController {
 	
 	private final MuscleService muscleService;
+	private final WeightService weightService;
 	
 	@GetMapping
 	public String top(Model model) {		
@@ -46,7 +49,8 @@ public class MuscleController {
 	}
 	
 	@PostMapping("/view")
-	public String create(@Validated MuscleForm muscleForm, BindingResult bindingResult, Model model) {
+	public String create(@Validated MuscleForm muscleForm, 
+						 BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
 			return insert(muscleForm, model);
 		}
@@ -65,7 +69,7 @@ public class MuscleController {
 	}
 	
 	@PutMapping("/view/{id}")
-	public String updste(@PathVariable("id") int id,
+	public String update(@PathVariable("id") int id,
 						 @Validated @ModelAttribute MuscleForm muscleForm,
 						 BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
@@ -82,4 +86,68 @@ public class MuscleController {
 		muscleService.delete(id);
 		return "redirect:/muscle/view";
 	}
-}
+	
+	@GetMapping("/weight")
+	public String weight(Model model) {
+		model.addAttribute("weightList", weightService.weiSelect());
+		model.addAttribute("title", "体重");
+		return "muscle/weight";
+	}
+	
+
+	@GetMapping("/weight/weiInsert")
+	public String weiInsert(@ModelAttribute WeightForm weightForm, Model model) {
+		model.addAttribute("mode", "CREATE");
+		model.addAttribute("title", "体重入力");
+		return "muscle/weiForm";
+	}
+	
+
+	@GetMapping("/weight/weiView")
+	public String weiView(Model model) {
+		model.addAttribute("title", "グラフ");
+		return "muscle/weiGraph";
+	}
+	
+	@PostMapping("/weight")
+	public String weiCreate(@Validated WeightForm weightForm, 
+							BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors()) {
+			return weiInsert(weightForm, model);
+		}
+		weightService.weiInsert(weightForm.toEntity());
+		return "redirect:/muscle/weight";
+	}
+	
+	@GetMapping("/weight/{id}/edit")
+	public String weiEdit(@PathVariable("id") int id, Model model) {
+		WeightEntity weightEntity = weightService.weiSelectById(id)
+						.orElseThrow(MuscleNotFoundException::new);
+		WeightForm weightForm = WeightForm.fromEntity(weightEntity);
+		model.addAttribute("weightForm", weightForm);
+		model.addAttribute("mode", "EDIT");
+		model.addAttribute("title", "体重編集");
+		return "muscle/weiForm";
+	}
+	
+	@PutMapping("/weight/{id}")
+	public String weiUpdate(@PathVariable("id") int id,
+			 				@Validated @ModelAttribute WeightForm weightForm,
+			 				BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("mode", "EDIT");
+			return "muscle/weiForm";
+		}
+		WeightEntity weightEntity = weightForm.toEntity(id);
+		weightService.weiUpdate(weightEntity);
+		return "redirect:/muscle/weight";
+	}
+	
+	@DeleteMapping("/weight/{id}")
+	public String weiDelete(@PathVariable("id") int id) {
+		weightService.weiDelete(id);
+		return "redirect:/muscle/weight";
+	}
+	
+	
+ }

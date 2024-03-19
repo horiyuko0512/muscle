@@ -68,7 +68,7 @@
 						<td th:text="*{traSet}"></td>
 						<td th:text="*{traTimes}"></td>
 						<td th:text="*{traType}"></td>
-						<td><a th:href="@{/muscle/{id}/edit(id=${list.id})}" class="btn btn-outline-success">編集</a></td>
+						<td><a th:href="@{/muscle/{id}/edit(id=*{id})}" class="btn btn-outline-success">編集</a></td>
 						<td>
 							<form th:action="@{/muscle/view/{id}(id=${list.id})}" th:method="delete"
 								onclick="return confirm('本当に削除しますか？');">

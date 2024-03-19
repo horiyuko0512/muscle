@@ -38,5 +38,4 @@ public class MuscleService {
 	public void delete(int id) {
 		muscleRepository.delete(id);
 	}
-
 }

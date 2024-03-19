@@ -59,4 +59,5 @@ public interface MuscleRepository {
 
 	@Delete("DELETE FROM muscle WHERE id = #{id}")
 	void delete(@Param("id") int id);
+	
 }

@@ -10,3 +10,12 @@ CREATE TABLE muscle (
 	traType varchar(255) NOT NULL,
 	PRIMARY KEY (id)
 );	
+
+DROP TABLE IF EXISTS weight;
+
+CREATE TABLE weight (
+	id int NOT NULL AUTO_INCREMENT,
+	doTime datetime NOT NULL ,
+	weight decimal(5,2) NOT NULL,
+	PRIMARY KEY (id)
+);	

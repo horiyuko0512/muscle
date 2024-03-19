@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div>
+			<a th:href="@{/muscle/weight/weiInsert}" class="btn btn-primary">登録</a>
+			<a th:href="@{/muscle/weight/weiView}" class="btn btn-primary">グラフを見る</a>
+		</div>
+		<div class="text-center">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>日付</th>
+						<th>体重</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list : ${weightList}" th:object="${list}">
+						<td th:text="${#temporals.format(list.doTime, 'yyyy/MM/dd/HH:mm')}"></td>
+						<td th:text="*{weight}"></td>
+						<td><a th:href="@{/muscle/weight/{id}/edit(id=*{id})}" class="btn btn-outline-success">編集</a></td>
+						<td>
+							<form th:action="@{/muscle/weight/{id}(id=*{id})}" th:method="delete" 
+								onclick="return confirm('本当に削除しますか？');">
+								<button type="submit" class="btn btn-outline-danger">削除</button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</body>
+
+</html>
