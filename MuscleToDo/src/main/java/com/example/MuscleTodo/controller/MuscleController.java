@@ -105,6 +105,8 @@ public class MuscleController {
 
 	@GetMapping("/weight/weiView")
 	public String weiView(Model model) {
+		model.addAttribute("timeList", weightService.doTimeSelect());
+		model.addAttribute("weightList", weightService.weightSelect());
 		model.addAttribute("title", "グラフ");
 		return "muscle/weiGraph";
 	}

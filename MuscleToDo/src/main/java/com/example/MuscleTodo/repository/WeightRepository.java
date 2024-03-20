@@ -1,5 +1,7 @@
 package com.example.MuscleTodo.repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,4 +31,10 @@ public interface WeightRepository {
 	
 	@Delete("DELETE FROM weight WHERE id = #{id}")
 	void weiDelete(@Param("id") int id);
+	
+	@Select("SELECT doTime FROM weight")
+	List<LocalDateTime> doTimeSelect();
+	
+	@Select("SELECT weight FROM weight")
+	List<BigDecimal> weightSelect();
 }

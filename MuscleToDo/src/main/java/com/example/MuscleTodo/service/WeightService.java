@@ -1,5 +1,7 @@
 package com.example.MuscleTodo.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +21,7 @@ public class WeightService {
 	public List<WeightEntity> weiSelect(){
 		return weightRepository.weiSelect();
 	}
-	
+
 	@Transactional
 	public void weiInsert(WeightEntity weightEntity) {
 		weightRepository.weiInsert(weightEntity);
@@ -37,6 +39,14 @@ public class WeightService {
 	@Transactional
 	public void weiDelete(int id) {
 		weightRepository.weiDelete(id);
+	}
+	
+	public List<LocalDateTime> doTimeSelect(){
+		return weightRepository.doTimeSelect();
+	}
+	
+	public List<BigDecimal> weightSelect(){
+		return weightRepository.weightSelect();
 	}
 }
 

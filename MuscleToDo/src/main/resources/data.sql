@@ -6,4 +6,12 @@ insert into muscle (doTime, traName, traWei, traSet, traTimes, traType) VALUES
 insert into weight (doTime, weight) VALUES
 ('2024/02/10 16:00:00', 60);
 insert into weight (doTime, weight) VALUES
-('2024/02/11 16:00:00', 61);
+('2024/02/11 16:00:00', 63);
+insert into weight (doTime, weight) VALUES
+('2024/02/12 16:00:00', 65);
+insert into weight (doTime, weight) VALUES
+('2024/02/13 16:00:00', 60);
+insert into weight (doTime, weight) VALUES
+('2024/02/14 16:00:00', 57);
+insert into weight (doTime, weight) VALUES
+('2024/02/15 16:00:00', 54);
