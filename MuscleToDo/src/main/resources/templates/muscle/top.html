@@ -5,11 +5,21 @@
 >
 <head>
 	<title th:text="${title}"></title>
+	<style>
+		.centered-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 80vh;
+		}
+	</style>
 </head>
 <body>
 <section layout:fragment="content">
-	<div class="text-center">
+	<div class="centered-content text-center">
 		<h2 class="h2">さあ！トレーニングを管理して理想の身体へ</h2>
+		<a th:href="@{/muscle/view}" class="btn btn-primary btn-lg mt-3">はじめる</a>
 	</div>
 </section>
 </body>
