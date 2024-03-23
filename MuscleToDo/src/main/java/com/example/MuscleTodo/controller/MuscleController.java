@@ -1,5 +1,7 @@
 package com.example.MuscleTodo.controller;
 
+import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.MuscleTodo.service.GrowthService;
 import com.example.MuscleTodo.service.MuscleEntity;
 import com.example.MuscleTodo.service.MuscleService;
 import com.example.MuscleTodo.service.WeightEntity;
@@ -27,6 +31,7 @@ public class MuscleController {
 	
 	private final MuscleService muscleService;
 	private final WeightService weightService;
+	private final GrowthService growthService;
 	
 	@GetMapping
 	public String top(Model model) {		
@@ -151,5 +156,39 @@ public class MuscleController {
 		return "redirect:/muscle/weight";
 	}
 	
+	@GetMapping("/growth")
+	public String growth(Model model) {
+		model.addAttribute("title", "成長");
+		model.addAttribute("growthList", growthService.groSelect());
+		return "muscle/growth";
+	}
+	
+	@GetMapping("/growth/groInsert")
+	public String groInsert(@ModelAttribute GrowthForm growthForm, Model model) {
+		model.addAttribute("mode", "CREATE");
+		model.addAttribute("title", "画像挿入");
+		return "/muscle/groForm";	
+	}
+	
+	@PostMapping("/growth")
+	public String groCreate(@Validated GrowthForm growthForm,
+							BindingResult bindingResult,
+							RedirectAttributes redirectAttributes,
+							Model model) {
+		if (growthForm.getImageFile().isEmpty()) {
+	        bindingResult.rejectValue("imageFile", "NotNull", "画像ファイルを選択してください");
+	    }
+		if(bindingResult.hasErrors()) {
+			return groInsert(growthForm, model);
+		}
+		try {
+			growthService.groInsert(growthForm);
+			redirectAttributes.addFlashAttribute("successMessage", "画像ファイルを正常に保存しました");
+		} catch (IOException e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMessage", "画像ファイルの保存に失敗しました");
+		}
+		return "redirect:/muscle/growth";
+	}
 	
  }

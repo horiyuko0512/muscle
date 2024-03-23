@@ -19,3 +19,12 @@ CREATE TABLE weight (
 	weight decimal(5,2) NOT NULL,
 	PRIMARY KEY (id)
 );	
+
+DROP TABLE IF EXISTS growth;
+
+CREATE TABLE growth (
+	id int NOT NULL AUTO_INCREMENT,
+	doTime datetime NOT NULL ,
+	imagePath varchar(255) NOT NULL,
+	PRIMARY KEY (id)
+);	

@@ -15,3 +15,8 @@ insert into weight (doTime, weight) VALUES
 ('2024/02/14 16:00:00', 57);
 insert into weight (doTime, weight) VALUES
 ('2024/02/15 16:00:00', 54);
+
+insert into growth (doTime, imagePath) VALUES
+('2024/02/20 12:00:00', 'img/c24db394-8b5e-48c0-8ffb-62b016cde8a6_ガリガリ男性.png');
+insert into growth (doTime, imagePath) VALUES
+('2024/02/22 12:00:00', 'img/d49072ab-e096-4e57-93ac-77719b203360_ムキムキ男性.png');

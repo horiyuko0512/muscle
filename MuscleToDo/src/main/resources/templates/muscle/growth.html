@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title th:text="${title}"></title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<a th:href="@{/muscle/growth/groInsert}" class="btn btn-primary mt-3">登録</a>
+		<div th:if="${successMessage}">
+			<div class="alert alert-success mt-3">
+				<p th:text="${successMessage}"></p>
+			</div>
+		</div>
+		<div th:if="${errorMessage}">
+			<div class="alert alert-danger mt-3">
+				<p th:text="${errorMessage}"></p>
+			</div>
+		</div>
+		<div th:each="list : ${growthList}" th:object="${list}">
+			<div class="label mt-3">日付</div>
+			<p th:text="${#temporals.format(list.doTime, 'yyyy/MM/dd/HH:mm')}"></p>
+			<div class="label">画像</div>
+		    <img th:src="@{'/' + ${list.imagePath}}" width="400" height="400" alt="成長の写真">
+		</div>
+	</section>
+</body>
+
+</html>
