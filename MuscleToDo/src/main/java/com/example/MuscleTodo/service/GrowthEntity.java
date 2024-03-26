@@ -12,4 +12,5 @@ public class GrowthEntity {
 	private Integer id;
 	private LocalDateTime doTime;
 	private String imagePath;
+	
 }

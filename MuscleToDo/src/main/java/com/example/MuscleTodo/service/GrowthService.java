@@ -34,9 +34,10 @@ public class GrowthService {
 			String fileName = UUID.randomUUID().toString() + "_" + growthForm.getImageFile().getOriginalFilename();
 			Path imgFilePath = Path.of(imgFolder, fileName);
 			Files.copy(growthForm.getImageFile().getInputStream(), imgFilePath);
-			String filePath = "img/" + fileName;
 			
-			GrowthEntity growthEntity = new GrowthEntity(null, growthForm.getDoTime(), filePath);
+			String dbPath = imgFilePath.toString().replace("\\", "/");
+			
+			GrowthEntity growthEntity = new GrowthEntity(null, growthForm.getDoTime(), dbPath);
 			growthRepository.groInsert(growthEntity);
 		}
 	}
