@@ -207,7 +207,7 @@ public class MuscleController {
 		if(bindingResult.hasErrors()) {
 			GrowthEntity growthEntity = growthService.groSelectById(id)
 					.orElseThrow(MuscleNotFoundException::new);
-			growthForm.setCurrentImagePath(growthEntity.getImagePath());
+			growthForm.setImagePath(growthEntity.getImagePath());
 			model.addAttribute("growthForm", growthForm);
 			model.addAttribute("mode", "EDIT");
 			return "muscle/groForm";
