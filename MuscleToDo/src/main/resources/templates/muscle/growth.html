@@ -19,12 +19,30 @@
 				<p th:text="${errorMessage}"></p>
 			</div>
 		</div>
-		<div th:each="list : ${growthList}" th:object="${list}">
-			<div class="label mt-3">日付</div>
-			<p th:text="${#temporals.format(list.doTime, 'yyyy/MM/dd/HH:mm')}"></p>
-			<div class="label">画像</div>
-		    <img th:src="@{'/' + ${list.imagePath}}" width="400" height="400" alt="成長の写真">
-		</div>
+		<table class="table mt-3">
+			<thead>
+				<tr>
+					<th>日付</th>
+					<th>画像</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${growthList}" th:object="${list}">
+					<td th:text="${#temporals.format(list.doTime, 'yyyy/MM/dd/HH:mm')}" class="align-middle"></td>
+					<td><img th:src="@{'/' + ${list.imagePath}}" width="400" height="400" alt="成長の写真"></td>
+					<td class="align-middle" style="text-align: center;">
+						<a th:href="@{/muscle/growth/{id}/edit(id=*{id})}"
+							class="btn btn-outline-success align-middle">編集</a>
+					</td>
+					<td class="align-middle" style="text-align: center;">
+						<form th:action="@{/muscle/growth/{id}(id=*{id})}" th:method="delete"
+							onclick="return confirm('本当に削除しますか？');">
+							<button type="submit" class="btn btn-outline-danger">削除</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</section>
 </body>
 

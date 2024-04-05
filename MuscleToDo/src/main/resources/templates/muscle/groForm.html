@@ -3,14 +3,14 @@
 	layout:decorate="~{layout/layout}">
 
 <head>
-	<title th:text="${title}"></title>
+	<title th:text="${mode == 'CREATE'} ? '画像挿入' : '画像編集'"></title>
 </head>
 
 <body>
 	<section layout:fragment="content">
 		<div>
-			<form th:action="@{/muscle/growth}" 
-				  method="post" 
+			<form th:action="${mode == 'CREATE'} ? @{/muscle/growth} : @{/muscle/growth/{id}(id=${id})}" 
+				  th:method="${mode == 'CREATE'} ? post : put" 
 				  enctype="multipart/form-data" 
 				  th:object="${growthForm}">
 				<div class="form-group">
@@ -19,10 +19,22 @@
 					<span th:errors="*{doTime}" class="invalid-feedback"></span>	
 				</div>
 				<div class="form-group mt-3">
-					<label for="iF" class="form-label">画像</label>
+					<div th:if="${mode == 'CREATE'}">
+						<label for="iF" class="form-label">画像</label>
+					</div>
+					<div th:if="${mode == 'EDIT'}">
+						<label for="iF" class="form-label">画像(画像を変更しない場合はそのまま編集ボタンを押してください)</label>
+					</div>
 					<input type="file" id="iF" th:field="*{imageFile}" class="form-control" th:errorclass="is-invalid">
 					<span th:errors="*{imageFile}" class="invalid-feedback"></span>
 				</div>
+				<input type="hidden" th:field="*{currentImagePath}" />
+				<div th:if="${mode == 'EDIT'}" class="form-group mt-3">
+                    <label class="form-label">現在の画像</label>
+                    <div>
+                        <img th:src="@{'/' + *{imagePath}}" width="400" height="400" alt="成長の写真"/>
+                    </div>
+                </div>
 				<div class="mt-3">
 					<button type="submit" class="btn btn-primary" th:text="${mode == 'CREATE'} ? '登録' : '編集'"></button>
 					<a th:href="@{/muscle/growth}" class="btn btn-secondary">戻る</a>
